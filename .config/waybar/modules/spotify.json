@@ -1,0 +1,10 @@
+{
+  "custom/spotify": {
+    "interval": 1,
+    "format": "  {}",
+    "max-length": 70,
+    "on-click": "playerctl play-pause",
+    "return-type": "json",
+    "exec": "playerctl metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"class\": \"{{status}}\"}'"
+  }
+}

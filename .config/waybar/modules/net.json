@@ -1,0 +1,7 @@
+{
+  "network": {
+    "interval": 3,
+    "format": "\uf433 {bandwidthDownBits} \uf431 {bandwidthUpBits}",
+    "tooltip-format": "{ifname}\n{ipaddr}/{cidr}\n{gwaddr}"
+  }
+}

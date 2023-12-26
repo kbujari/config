@@ -1,0 +1,220 @@
+include ./extra/*
+
+set {
+  $mod Mod4
+
+  $left  h
+  $down  j
+  $up    k
+  $right l
+
+  $term  /usr/bin/footclient
+  $browser   /usr/bin/firefox
+
+  $menu  /usr/bin/fuzzel
+  $lock  /usr/bin/swaylock -c 2b3328 --indicator-caps-lock --ignore-empty-password
+}
+
+exec {
+  /usr/bin/mako
+  /usr/bin/swayidle -w timeout 450 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+}
+
+exec_always {
+  ~/.config/waybar/waybar.sh
+  /usr/bin/foot --server
+}
+
+output * bg #1f1f28 solid_color
+
+output DP-2 {
+  mode 3840x1600@144Hz
+  adaptive_sync on
+  max_render_time 1
+}
+
+output HDMI-A-2 {
+  mode 1920x1080@60Hz
+}
+
+input {
+  type:pointer {
+	  accel_profile flat
+	  pointer_accel 0
+  }
+  type:keyboard {
+    xkb_capslock disabled
+    xkb_layout us
+  }
+  type:tablet_tool {
+    map_to_output HDMI-A-2
+  }
+}
+
+smart_gaps off
+gaps {
+  inner 4
+  outer 0
+}
+
+font Fira Code 10
+
+default_border pixel 2
+hide_edge_borders smart
+
+floating_modifier $mod normal
+
+for_window {
+  [title="Volume Control"] {
+    floating enable,
+    resize set width 30 ppt height 50 ppt,
+    move absolute position center;
+  }
+  [title="Network Connections"] {
+    floating enable,
+    resize set width 40 ppt height 50 ppt,
+    move absolute position center;
+  }
+  [title="File Upload"] {
+    floating enable,
+    resize set width 50 ppt height 60 ppt
+    move absolue position center;
+  }
+  [title="RuneLite Launcher"] floating enable
+  [shell=".*"] inhibit_idle fullscreen
+  [class="^Steam$" title="Friends"] floating enable
+  [class="^Steam$" title="Steam - News"] floating enable, resize set width 40 ppt height 50ppt
+  [class="^Steam$" title="^Settings$"] floating enable
+  [class="^Steam$" title=".* - event started"] floating enable
+  [class="^Steam$" title=".* CD key"] floating enable
+  [class="^Steam$" title="^Steam - Self Updater$"] floating enable
+  [class="^Steam$" title="^Screenshot Uploader$"] floating enable
+  [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
+  [title="^Steam Keyboard$"] floating enable
+  [window_role = "pop-up"] floating enable
+  [window_role = "bubble"] floating enable
+  [window_role = "dialog"] floating enable
+  [window_type = "dialog"] floating enable
+  [class = "dialog"] floating enable
+  [window_role = "task_dialog"] floating enable
+  [window_type = "menu"] floating enable
+  [window_role = "About"] floating enable
+  [class="^Origin$" title=".*"] floating enable
+
+  [shell="xwayland"] title_format "[X] %title"
+}
+
+bindsym --to-code {
+  $mod+shift+r reload
+
+  $mod+Left   focus left
+  $mod+Down   focus down
+  $mod+Up     focus up
+  $mod+Right  focus right
+
+  $mod+$left   focus left
+  $mod+$down   focus down
+  $mod+$up     focus up
+  $mod+$right  focus right
+
+  $mod+Shift+Left   move left
+  $mod+Shift+Down   move down
+  $mod+Shift+Up     move up
+  $mod+Shift+Right  move right
+
+  $mod+Shift+$left  move left
+  $mod+Shift+$down  move down
+  $mod+Shift+$up    move up
+  $mod+Shift+$right move right
+
+  $mod+Control+$left  seat - cursor move -10  0
+  $mod+Control+$down  seat - cursor move  0   10
+  $mod+Control+$up    seat - cursor move  0  -10
+  $mod+Control+$right seat - cursor move  10  0
+
+  $mod+Control+Left   seat - cursor move -10  0
+  $mod+Control+Down   seat - cursor move  0   10
+  $mod+Control+Up     seat - cursor move  0  -10
+  $mod+Control+Right  seat - cursor move  10  0
+
+  $mod+w kill
+
+  $mod+b split toggle
+
+  $mod+f fullscreen toggle
+  $mod+space floating toggle
+
+  $mod+t layout toggle tabbed split
+
+  $mod+a focus parent
+  $mod+q focus next
+
+  $mod+Return exec $term
+  $mod+d exec $menu
+  $mod+e exec $files
+  $mod+Escape exec $lock
+  alt+p exec $browser
+
+  $mod+1 workspace number 1
+  $mod+2 workspace number 2
+  $mod+3 workspace number 3
+  $mod+4 workspace number 4
+  $mod+5 workspace number 5
+  $mod+6 workspace number 6
+  $mod+7 workspace number 7
+  $mod+8 workspace number 8
+  $mod+9 workspace number 9
+  $mod+0 workspace number 10
+
+  $mod+Shift+1 move container to workspace number 1
+  $mod+Shift+2 move container to workspace number 2
+  $mod+Shift+3 move container to workspace number 3
+  $mod+Shift+4 move container to workspace number 4
+  $mod+Shift+5 move container to workspace number 5
+  $mod+Shift+6 move container to workspace number 6
+  $mod+Shift+7 move container to workspace number 7
+  $mod+Shift+8 move container to workspace number 8
+  $mod+Shift+9 move container to workspace number 9
+  $mod+Shift+0 move container to workspace number 10
+
+  $mod+shift+z exec sh ~/bin/screenshot.sh Display
+  $mod+shift+s exec sh ~/bin/screenshot.sh Region
+
+  $mod+r mode "resize"
+}
+
+bindsym --locked {
+  XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +1000
+  XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -1000
+  XF86AudioMicMute      exec pactl set-source-mute 0 toggle
+  XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+  XF86MonBrightnessDown exec light -U 5
+  XF86MonBrightnessUp   exec light -A 5
+
+  $mod+x exec playerctl play-pause
+  $mod+z exec playerctl previous
+  $mod+c exec playerctl next
+
+  XF86AudioPlay exec playerctl play-pause
+  XF86AudioPrev exec playerctl previous
+  XF86AudioNext exec playerctl next
+}
+
+mode "resize" {
+  bindsym {
+    $left  resize grow width 20px
+    $down  resize shrink height 20px
+    $up    resize grow height 20px
+    $right resize shrink width 20px
+
+    Left   resize grow width 20px
+    Down   resize shrink height 20px
+    Up     resize grow height 20px
+    Right  resize shrink width 20px
+
+    Return  mode "default"
+    Escape  mode "default"
+    $mod+r  mode "default"
+  }
+}

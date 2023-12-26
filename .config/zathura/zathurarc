@@ -1,0 +1,61 @@
+map r reload
+map p print
+map i recolor
+map J zoom out
+map K zoom in
+map R rotate
+unmap f
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
+
+set adjust-open       "best-fit"
+
+set pages-per-row 1
+
+set scroll-full-overlap 0.01
+set scroll-step 100
+set zoom-min 10
+set scroll-page-aware     "true"
+set smooth-scroll         "true"
+set guioptions            "sv"
+set selection-clipboard   "clipboard"
+
+set notification-error-bg       "#ac8a8c" # Red
+set notification-error-fg       "#c5c9c5" # Foreground
+set notification-warning-bg     "#c6a679" # Orange
+set notification-warning-fg     "#191919" # Selection
+set notification-bg             "#181616" # Background
+set notification-fg             "#c5c9c5" # Foreground
+
+set completion-bg               "#181616" # Background
+set completion-fg               "#4c4c4c" # Comment
+set completion-group-bg         "#181616" # Background
+set completion-group-fg         "#4c4c4c" # Comment
+set completion-highlight-bg     "#191919" # Selection
+set completion-highlight-fg     "#c5c9c5" # Foreground
+
+set index-bg                    "#181616" # Background
+set index-fg                    "#c5c9c5" # Foreground
+set index-active-bg             "#191919" # Current Line
+set index-active-fg             "#c5c9c5" # Foreground
+
+set inputbar-bg                 "#181616" # Background
+set inputbar-fg                 "#c5c9c5" # Foreground
+set statusbar-bg                "#181616" # Background
+set statusbar-fg                "#c5c9c5" # Foreground
+
+set highlight-color             "#8aac8b" # Orange
+set highlight-active-color      "#aca98a" # Pink
+
+set default-bg                  "#181616" # Background
+set default-fg                  "#c5c9c5" # Foreground
+
+set render-loading              true
+set render-loading-fg           "#181616" # Background
+set render-loading-bg           "#c5c9c5" # Foreground
+
+# Recolor mode settings
+#
+#
+set recolor-lightcolor          "#181616" # Background
+set recolor-darkcolor           "#c5c9c5" # Foreground
