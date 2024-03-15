@@ -1,6 +1,6 @@
 return {
   "hrsh7th/nvim-cmp",
-  event = "InsertEnter",
+  event = "BufReadPre",
   enabled = true,
   dependencies = {
     "neovim/nvim-lspconfig",
@@ -10,6 +10,7 @@ return {
     "hrsh7th/cmp-emoji",
     "onsails/lspkind.nvim",
     "L3MON4D3/LuaSnip",
+    "saadparwaiz1/cmp_luasnip",
   },
   config = function()
     local cmp = require("cmp")
@@ -17,6 +18,15 @@ return {
     local lspkind = require("lspkind")
 
     require("luasnip/loaders/from_vscode").lazy_load()
+    vim.api.nvim_create_autocmd("ModeChanged", {
+      pattern = { "s:n", "i:*" },
+      desc = "Forget the current snippet when leaving the insert mode",
+      callback = function(evt)
+        if luasnip.session and luasnip.session.current_nodes[evt.buf] and not luasnip.session.jump_active then
+          luasnip.unlink_current()
+        end
+      end,
+    })
 
     cmp.setup({
       enabled = function()
@@ -28,9 +38,7 @@ return {
         end
       end,
       snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
+        expand = function(args) luasnip.lsp_expand(args.body) end,
       },
       -- completion = { border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, scrollbar = "║" },
       window = {

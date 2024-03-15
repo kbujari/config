@@ -1,6 +1,5 @@
 return {
   "neovim/nvim-lspconfig",
-  enabled = true,
   event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",

@@ -1,6 +1,6 @@
 return {
   "lervag/vimtex",
-  lazy = true,
+  enabled = true,
   ft = "tex",
   keys = {
     { "<leader>ll", "<cmd>VimtexCompile<cr>", desc = "VimtexCompile" },
@@ -8,7 +8,5 @@ return {
     { "<leader>ls", "<cmd>VimtexStatus<cr>", desc = "VimtexStatus" },
     { "<leader>lt", "<cmd>VimtexTocToggle<cr>", desc = "VimtexTocToggle" },
   },
-  config = function()
-    vim.g.vimtex_view_method = "zathura"
-  end,
+  config = function() vim.g.vimtex_view_method = "zathura" end,
 }

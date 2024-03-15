@@ -1,12 +1,12 @@
 function _G.searchDir()
   require("telescope.builtin").find_files({
     border = true,
-    cwd = os.getenv("HOME") .. "/.config/nvim",
   })
 end
 
 return {
   "nvim-telescope/telescope.nvim",
+  enabled = true,
   cmd = "Telescope",
   branch = "0.1.x",
   dependencies = {
@@ -21,7 +21,15 @@ return {
     { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Search in buffers" },
     { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Search help tags" },
     { "<leader>fc", "<cmd>Telescope colorscheme preview=true<cr>", desc = "Change colorscheme" },
-    { "<leader>fn", "<cmd>lua searchDir()<cr>", desc = "Search config files" },
+    {
+      "<leader>fn",
+      function()
+        require("telescope.builtin").find_files({
+          cwd = os.getenv("HOME") .. "/.config/nvim",
+        })
+      end,
+      desc = "Search config files",
+    },
   },
   config = function()
     local actions = require("telescope.actions")
@@ -40,8 +48,8 @@ return {
         layout_strategy = "horizontal",
         path_display = { "smart" },
         winblend = 0,
-        border = true,
-        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        -- border = true,
+        -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         normal_mode = true,
         vimgrep_arguments = {
           "rg",

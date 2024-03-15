@@ -1,13 +1,14 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
 local core = {
-  "core/keymaps",
-  "core/settings",
   "core/autocmd",
+  "core/keymaps",
   "core/lazy",
+  "core/options",
 }
 
 for _, module in ipairs(core) do
   local ok = pcall(require, module)
-  if not ok then
-    return
-  end
+  if not ok then return end
 end

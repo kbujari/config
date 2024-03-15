@@ -11,33 +11,37 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-  { import = "plugins" },
-}, {
-  install = {
-    missing = true,
-    colorscheme = { "kanagawa-dragon" },
-  },
+require("lazy").setup("plugins", {
+  defaults = { lazy = true },
+  install = { colorscheme = { "kanagawa-dragon", "habamax" } },
   performance = {
-    cache = {
-      enabled = true,
-    },
+    cache = { enabled = true },
     rtp = {
       disabled_plugins = {
+        "2html_plugin",
+        "getscript",
+        "getscriptPlugin",
         "gzip",
+        "logipat",
         "matchit",
         "matchparen",
+        "netrw",
+        "netrwFileHandlers",
         "netrwPlugin",
-        "rplugin",
+        "netrwSettings",
+        "netrw_nogx",
+        "rrhelper",
+        "spellfile_plugin",
+        "tar",
         "tarPlugin",
         "tohtml",
-        -- "tutor",
+        "tutor",
+        "tutor_mode_plugin",
+        "vimball",
+        "vimballPlugin",
+        "zip",
         "zipPlugin",
-        "loaded_netrw",
-        "loaded_netrwPlugin",
       },
     },
   },
 })
-
-vim.api.nvim_set_keymap("n", "<leader>u", "<cmd>Lazy home <CR>", { desc = "Update" })

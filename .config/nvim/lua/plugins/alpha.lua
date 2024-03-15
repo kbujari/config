@@ -6,8 +6,8 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   opts = function()
-    local dashboard = require("alpha.themes.dashboard")
-    dashboard.section.header.val = {
+    local db = require("alpha.themes.dashboard")
+    db.section.header.val = {
       "                                   ",
       "                                   ",
       "                                   ",
@@ -25,27 +25,23 @@ return {
       "                                   ",
     }
 
-    dashboard.config.layout = {
+    db.config.layout = {
       { type = "padding", val = 5 },
-      dashboard.section.header,
+      db.section.header,
       { type = "padding", val = 1 },
-      dashboard.section.footer,
+      db.section.footer,
     }
 
-    return dashboard
+    return db
   end,
-  config = function(_, dashboard)
+  config = function(_, db)
     if vim.o.filetype == "lazy" then
       vim.cmd.close()
       vim.api.nvim_create_autocmd("User", {
         pattern = "AlphaReady",
-        callback = function()
-          require("lazy").show()
-        end,
+        callback = function() require("lazy").show() end,
       })
     end
-
-    require("alpha").setup(dashboard.opts)
 
     vim.api.nvim_create_autocmd("User", {
       pattern = "LazyVimStarted",
@@ -55,9 +51,11 @@ return {
         local version = "v" .. vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
         local plugins = "Loaded " .. stats.count .. " plugins in " .. ms .. "ms"
         local footer = version .. "\t" .. plugins .. "\n"
-        dashboard.section.footer.val = footer
+        db.section.footer.val = footer
         pcall(vim.cmd.AlphaRedraw)
       end,
     })
+
+    require("alpha").setup(db.opts)
   end,
 }
