@@ -3,6 +3,7 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   build = ":TSUpdate",
   dependencies = {
+    "windwp/nvim-ts-autotag",
     { "nvim-treesitter/nvim-treesitter-context", opts = {} },
   },
   opts = {
@@ -48,6 +49,7 @@ return {
       enable = true,
       additional_vim_regex_highlighting = false,
     },
+    autotag = { enable = true },
     indent = { enable = true },
     incremental_selection = {
       enable = true,
