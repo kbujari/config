@@ -43,5 +43,6 @@ opt.wrap = false -- disable line wrap
 vim.filetype.add({
   pattern = {
     ["${XDG_CONFIG_HOME}/zathura/zathurarc"] = "zathurarc",
+    ["${XDG_CONFIG_HOME}/waybar/config"] = "json",
   },
 })
