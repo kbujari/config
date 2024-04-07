@@ -1,5 +1,5 @@
 {
-  "custom/spotify": {
+  "custom/player": {
     "interval": 1,
     "format": "\udb80\udf88 {}",
     "max-length": 70,

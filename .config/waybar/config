@@ -4,7 +4,7 @@
   "height": 36,
   "spacing": 12,
   "margin": "0 0 0 0",
-  "modules-left": ["sway/workspaces", "custom/spotify", "sway/mode"],
+  "modules-left": ["sway/workspaces", "custom/player", "sway/mode"],
   "modules-center": ["sway/window"],
   "modules-right": ["network", "pulseaudio", "memory", "tray", "idle_inhibitor", "clock"],
   "include": [
@@ -13,7 +13,7 @@
     "~/.config/waybar/modules/memory.json",
     "~/.config/waybar/modules/net.json",
     "~/.config/waybar/modules/pulseaudio.json",
-    "~/.config/waybar/modules/spotify.json",
+    "~/.config/waybar/modules/player.json",
     "~/.config/waybar/modules/sway.json",
     "~/.config/waybar/modules/tray.json",
   ]
