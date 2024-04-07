@@ -17,7 +17,7 @@ return {
       cmd = "MasonToolsInstall",
       opts = {
         ensure_installed = {
-          "prettierd",
+          "prettier",
           "shellharden",
           "shfmt",
         },
@@ -27,18 +27,23 @@ return {
   opts = {
     -- rest are handled by lsp formatter
     formatters_by_ft = {
-      astro = { "prettierd" },
+      astro = { "prettier" },
       bash = { "shellharden", "shfmt" },
-      css = { "prettierd" },
-      html = { "prettierd" },
-      javascript = { "prettierd" },
-      json = { "prettierd" },
-      markdown = { "prettierd" },
+      css = { "prettier" },
+      html = { "prettier" },
+      javascript = { "prettier" },
+      json = { "prettier" },
+      markdown = { "prettier" },
       sh = { "shellharden", "shfmt" },
-      svelte = { "prettierd" },
-      typescript = { "prettierd" },
-      yaml = { "prettierd" },
+      svelte = { "prettier" },
+      typescript = { "prettier" },
+      yaml = { "prettier" },
       zsh = { "shellharden", "shfmt" },
+    },
+    formatters = {
+      prettier = {
+        prepend_args = { "--prose-wrap", "always" }
+      }
     },
   },
 }
