@@ -26,7 +26,7 @@ button.focused  { color: #7e9cd8; }
 #battery.bat2.charging { color: #76946a; }
 
 #bluetooth      { color: #458588; }
-#custom-spotify { color: #dca561; }
+#custom-player { color: #dca561; }
 #memory         { color: #ffa066; }
 #pulseaudio     { color: #d27e99; }
 #backlight      { color: #6a9589; }
