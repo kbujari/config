@@ -1,0 +1,35 @@
+[user]
+  email = mail@4kb.net
+  name = Kleidi Bujari
+  signingkey = ~/.ssh/id_ed25519.pub
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+
+[alias]
+  tag = tag -s
+
+[core]
+  commitGraph = true
+  editor = nvim
+
+[push]
+  default = upstream
+
+[fetch]
+  prune = true
+
+[log]
+  date = short
+
+[init]
+  defaultBranch = true
+
+[tag]
+  gpgSign = true
+
+[commit]
+  gpgSign = true
