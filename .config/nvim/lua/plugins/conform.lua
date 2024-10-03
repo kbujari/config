@@ -1,15 +1,7 @@
 return {
   "stevearc/conform.nvim",
-  enabled = true,
-  event = "BufWritePre",
+  event = { "LspAttach", "BufWritePre" },
   cmd = "ConformInfo",
-  keys = {
-    {
-      "<leader>b",
-      function() require("conform").format({ async = true, lsp_fallback = true }) end,
-      desc = "Format buffer",
-    },
-  },
   dependencies = {
     {
       "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -17,33 +9,42 @@ return {
       cmd = "MasonToolsInstall",
       opts = {
         ensure_installed = {
-          "prettier",
+          "black",
+          "nixpkgs-fmt",
+          "prettierd",
           "shellharden",
           "shfmt",
+          "stylua",
         },
       },
     },
   },
   opts = {
-    -- rest are handled by lsp formatter
     formatters_by_ft = {
-      astro = { "prettier" },
+      astro = { "prettierd" },
       bash = { "shellharden", "shfmt" },
-      css = { "prettier" },
-      html = { "prettier" },
-      javascript = { "prettier" },
-      json = { "prettier" },
-      markdown = { "prettier" },
+      css = { "prettierd" },
+      html = { "prettierd" },
+      javascript = { "prettierd" },
+      json = { "prettierd" },
+      lua = { "stylua" },
+      nix = { "nixpkgs_fmt" },
+      markdown = { "prettierd", "injected" },
       sh = { "shellharden", "shfmt" },
-      svelte = { "prettier" },
-      typescript = { "prettier" },
-      yaml = { "prettier" },
+      python = { "black" },
+      svelte = { "prettierd" },
+      typescript = { "prettierd" },
+      yaml = { "prettierd" },
       zsh = { "shellharden", "shfmt" },
     },
-    formatters = {
-      prettier = {
-        prepend_args = { "--prose-wrap", "always" }
-      }
+  },
+  keys = {
+    {
+      "<leader>b",
+      function()
+        require("conform").format({ lsp_format = "fallback", async = true })
+      end,
+      desc = "Format Buffer",
     },
   },
 }

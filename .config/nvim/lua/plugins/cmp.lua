@@ -3,19 +3,18 @@ return {
   event = "BufReadPre",
   enabled = true,
   dependencies = {
-    "neovim/nvim-lspconfig",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-emoji",
-    "onsails/lspkind.nvim",
     "L3MON4D3/LuaSnip",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-emoji",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-path",
+    "neovim/nvim-lspconfig",
+    "rafamadriz/friendly-snippets",
     "saadparwaiz1/cmp_luasnip",
   },
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-    local lspkind = require("lspkind")
 
     require("luasnip/loaders/from_vscode").lazy_load()
     vim.api.nvim_create_autocmd("ModeChanged", {
@@ -38,14 +37,9 @@ return {
         end
       end,
       snippet = {
-        expand = function(args) luasnip.lsp_expand(args.body) end,
-      },
-      -- completion = { border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, scrollbar = "║" },
-      window = {
-        documentation = cmp.config.window.bordered(),
-        -- border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-        -- scrollbar = "║",
-        completion = cmp.config.window.bordered(),
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+        end,
       },
       sources = {
         { name = "nvim_lsp" },
@@ -54,21 +48,9 @@ return {
         { name = "emoji" },
         { name = "buffer" },
       },
-      formatting = {
-        format = lspkind.cmp_format({
-          mode = "symbol_text",
-          preset = "default",
-          maxwidth = 50,
-          ellipses_char = "...",
-        }),
-      },
       confirm_opts = {
         behavior = cmp.ConfirmBehavior.Replace,
         select = false,
-      },
-      experimental = {
-        ghost_text = true,
-        native_menu = false,
       },
       mapping = {
         ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),

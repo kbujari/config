@@ -1,11 +1,12 @@
 local opt = vim.opt
 
 opt.autoindent = true -- keep indent on new line
+opt.autoread = true -- sync buffers across instances
 opt.autowrite = true -- save changes when switching buffer
 opt.background = "dark" -- dark bg
 opt.clipboard = "unnamedplus" -- use system clipboard
-opt.cmdheight = 1 -- remove cmdline
-opt.conceallevel = 2 -- hide markers for bold and italic
+opt.cmdheight = 0 -- remove cmdline
+opt.conceallevel = 0 -- hide markers for bold and italic
 opt.encoding = "utf-8" -- text encoding
 opt.expandtab = true -- spaces instead of tabs
 opt.fileencoding = "utf-8" -- file encoding
