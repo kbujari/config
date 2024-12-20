@@ -1,7 +1,7 @@
 {
   "memory": {
     "interval": 5,
-    "format": "  {used:0.2f}G",
+    "format": "{used:0.2f}G",
     "max-length": 10,
     "tooltip": true,
     "tooltip-format": "Total:\t\t{total:.2f}G\nUsed:\t\t{used:.2f}G\nAvailable:\t{avail:.2f}G\n% Used:\t\t{percentage}%"

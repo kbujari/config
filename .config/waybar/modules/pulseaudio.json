@@ -1,15 +1,8 @@
 {
   "pulseaudio": {
-    "format": "{icon}  {volume}",
-    "format-alt": "{volume}",
-    "format-alt-click": "click-right",
-    "format-muted": "󰝟",
+    "format": "{volume}%",
     "scroll-step": 2,
     "on-click": "pavucontrol",
-    "tooltip": false,
-    "format-icons": {
-      "default": ["", "", ""],
-      "headphone": ""
-    }
+    "tooltip": false
   }
 }

@@ -21,8 +21,7 @@
         "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
       }
     },
-    "format": " {:%a %d - %H:%M}",
-    "format-alt": "{:%H:%M}",
+    "format": "{:%a %d - %H:%M}",
     "format-alt-click": "click-right",
     "timezone": "America/Toronto",
     "tooltip": true,
