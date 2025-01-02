@@ -20,6 +20,7 @@ opt.cmdheight = 0 -- remove cmdline
 opt.expandtab = true -- spaces instead of tabs
 opt.ignorecase = true -- ignore case
 opt.mouse = "a" -- enable mouse
+opt.number = true -- show line number
 opt.relativenumber = true -- relative line numbers
 opt.shiftwidth = 2 -- size of an indent
 opt.smartcase = true -- don't ignore case when using caps

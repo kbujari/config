@@ -19,7 +19,7 @@ return {
 			cpp = { lsp_format = "fallback" },
 			css = { "prettier" },
 			html = { "prettier" },
-			htmldjango = { "prettier" },
+			htmldjango = { "djlint" },
 			javascript = { "prettier" },
 			json = { "prettier" },
 			lua = { "stylua", lsp_format = "fallback" },

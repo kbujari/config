@@ -11,7 +11,7 @@ return {
 	end,
 	opts = {
 		servers = {
-      bashls = {},
+			bashls = {},
 			clangd = {
 				cmd = {
 					"clangd",
@@ -23,6 +23,7 @@ return {
 					"--header-insertion-decorators",
 				},
 			},
+			cssls = {},
 			lua_ls = {
 				settings = {
 					Lua = {
