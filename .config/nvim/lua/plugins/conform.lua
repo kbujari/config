@@ -25,7 +25,7 @@ return {
 			lua = { "stylua", lsp_format = "fallback" },
 			markdown = { "prettier", "injected" },
 			nix = { "nixpkgs_fmt" },
-			python = { "black" },
+			python = { "ruff_format", lsp_format = "fallback" },
 			rust = { "rustfmt" },
 			sh = { "shellharden", "shfmt" },
 			svelte = { "prettier" },

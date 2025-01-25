@@ -58,6 +58,7 @@ return {
 					},
 				},
 			},
+			pylsp = {},
 			tinymist = {},
 		},
 	},
