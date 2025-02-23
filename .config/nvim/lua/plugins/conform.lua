@@ -15,8 +15,8 @@ return {
 		formatters_by_ft = {
 			astro = { "prettier" },
 			bash = { "shellharden", "shfmt" },
-			c = { lsp_format = "fallback" },
-			cpp = { lsp_format = "fallback" },
+			c = { "clang-format", lsp_format = "fallback" },
+			cpp = { "clang-format", lsp_format = "fallback" },
 			css = { "prettier" },
 			html = { "prettier" },
 			htmldjango = { "djlint" },

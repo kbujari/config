@@ -1,37 +1,28 @@
 include /etc/sway/config.d/*
 
-set {
-  $mod Mod4
-  $left  h
-  $down  j
-  $up    k
-  $right l
-
-  $term     footclient
-  $browser  firefox
-  $menu     fuzzel
-  $lock     swaylock -c 2b3328 --indicator-caps-lock --ignore-empty-password
-}
+set $mod Mod4
+set $lock swaylock -c 2b3328 --indicator-caps-lock --ignore-empty-password
 
 exec {
   mako
   swayidle -w timeout 450 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+  udiskie
 }
 
 exec_always {
-  foot --server
-  killall -SIGUSR2 waybar || waybar
+  pkill -x -SIGUSR2 waybar || waybar
 }
 
+
 output * bg #1f1f28 solid_color
+# output * bg ~/files/pictures/apollo.jpg fill
 
 output DP-1 {
   mode 3840x1600@144Hz
   adaptive_sync on
-  max_render_time 1
 }
 
-output HDMI-A-2 {
+output HDMI-A-1 {
   mode 1920x1080@60Hz
 }
 
@@ -45,7 +36,7 @@ input {
     xkb_layout us
   }
   type:tablet_tool {
-    map_to_output HDMI-A-2
+    map_to_output HDMI-A-1
   }
 }
 
@@ -55,84 +46,37 @@ gaps {
   outer 2
 }
 
-font Iosevka Nerd Font 10
+font Terminus 10
 
-default_border pixel 3
+default_border pixel 2
 hide_edge_borders smart
 
 floating_modifier $mod normal
 
 for_window {
-  [title="Volume Control"] {
-    floating enable,
-    resize set width 30 ppt height 50 ppt,
-    move absolute position center;
-  }
-  [title="Network Connections"] {
-    floating enable,
-    resize set width 40 ppt height 50 ppt,
-    move absolute position center;
-  }
-  [title="File Upload"] {
-    floating enable,
-    resize set width 50 ppt height 60 ppt
-    move absolue position center;
-  }
-  [shell=".*"] inhibit_idle fullscreen
-  [class="^Steam$" title="Friends"] floating enable
-  [class="^Steam$" title="Steam - News"] floating enable, resize set width 40 ppt height 50ppt
-  [class="^Steam$" title="^Settings$"] floating enable
-  [class="^Steam$" title=".* - event started"] floating enable
-  [class="^Steam$" title=".* CD key"] floating enable
-  [class="^Steam$" title="^Steam - Self Updater$"] floating enable
-  [class="^Steam$" title="^Screenshot Uploader$"] floating enable
-  [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
-  [title="^Steam Keyboard$"] floating enable
-  [window_role = "pop-up"] floating enable
-  [window_role = "bubble"] floating enable
-  [window_role = "dialog"] floating enable
-  [window_type = "dialog"] floating enable
-  [class = "dialog"] floating enable
-  [window_role = "task_dialog"] floating enable
-  [window_type = "menu"] floating enable
-  [window_role = "About"] floating enable
-  [class="^Origin$" title=".*"] floating enable
-
+  # prepend [X] to xwayland windows
   [shell="xwayland"] title_format "[X] %title"
+
+  # float any filesystem dialogs
+  [title="(?:Open|Save) (?:File|Folder|As)"] floating enable
+  [shell=".*"] inhibit_idle fullscreen
+  [title="Friends List"] floating enable, resize set width 10 ppt height 50 ppt
+  [title="Steam Settings"] floating enable, resize set width 25 ppt height 50 ppt
+  [app_id="firefox"] inhibit_idle focus
 }
 
 bindsym --to-code {
   $mod+shift+r reload
 
-  $mod+left   focus left
-  $mod+down   focus down
-  $mod+up     focus up
-  $mod+right  focus right
+  $mod+h          focus left
+  $mod+j          focus down
+  $mod+k          focus up
+  $mod+l          focus right
 
-  $mod+$left   focus left
-  $mod+$down   focus down
-  $mod+$up     focus up
-  $mod+$right  focus right
-
-  $mod+shift+Left   move left
-  $mod+shift+Down   move down
-  $mod+shift+Up     move up
-  $mod+shift+Right  move right
-
-  $mod+shift+$left  move left
-  $mod+shift+$down  move down
-  $mod+shift+$up    move up
-  $mod+shift+$right move right
-
-  $mod+control+$left  seat - cursor move -10  0
-  $mod+control+$down  seat - cursor move  0   10
-  $mod+control+$up    seat - cursor move  0  -10
-  $mod+control+$right seat - cursor move  10  0
-
-  $mod+control+Left   seat - cursor move -10  0
-  $mod+control+Down   seat - cursor move  0   10
-  $mod+control+Up     seat - cursor move  0  -10
-  $mod+control+Right  seat - cursor move  10  0
+  $mod+shift+h    move left
+  $mod+shift+j    move down
+  $mod+shift+k    move up
+  $mod+shift+l    move right
 
   $mod+w kill
 
@@ -141,14 +85,17 @@ bindsym --to-code {
   $mod+t layout toggle tabbed split
   $mod+space floating toggle
 
-  $mod+a focus parent
-  $mod+q focus next
+  $mod+Escape   exec $lock
+  $mod+return   exec foot
+  $mod+d        exec fuzzel
+  alt+p         exec firefox
 
-  $mod+return exec $term
-  $mod+d exec $menu
-  $mod+e exec $files
-  $mod+Escape exec $lock
-  alt+p exec $browser
+  $mod+s exec grimshot -n copy anything
+  $mod+shift+s exec grimshot -n savecopy anything
+  $mod+backspace exec grimshot -n copy output
+  $mod+shift+backspace exec grimshot -n savecopy output
+
+  $mod+r mode "resize"
 
   $mod+1 workspace number 1
   $mod+2 workspace number 2
@@ -171,11 +118,6 @@ bindsym --to-code {
   $mod+shift+8 move container to workspace number 8
   $mod+shift+9 move container to workspace number 9
   $mod+shift+0 move container to workspace number 10
-
-  $mod+shift+s exec grimshot -n copy anything
-  $mod+shift+z exec grimshot -n savecopy anything
-
-  $mod+r mode "resize"
 }
 
 bindsym --locked {
@@ -198,15 +140,10 @@ bindsym --locked {
 
 mode "resize" {
   bindsym {
-    $left  resize grow width 20px
-    $down  resize shrink height 20px
-    $up    resize grow height 20px
-    $right resize shrink width 20px
-
-    Left   resize grow width 20px
-    Down   resize shrink height 20px
-    Up     resize grow height 20px
-    Right  resize shrink width 20px
+    l resize grow   width  20px
+    j resize shrink height 20px
+    k resize grow   height 20px
+    h resize shrink width  20px
 
     Return  mode "default"
     Escape  mode "default"
