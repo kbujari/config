@@ -10,6 +10,10 @@ input {
     natural-scroll
   }
 
+  trackpoint {
+    accel-speed 0.2
+  }
+
   mouse {
     accel-speed 0.0
     accel-profile "flat"
@@ -27,6 +31,12 @@ environment {
 output "LG Electronics LG HDR WQHD+ 112NTHMGH369" {
   mode "3840x1600"
   variable-refresh-rate
+  background-color "#1f1f28"
+}
+
+output "LG Display 0x046D Unknown" {
+  mode "1920x1080"
+  scale 1.0
   background-color "#1f1f28"
 }
 
@@ -52,6 +62,9 @@ binds {
   XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
   XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
   XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
+
+  XF86MonBrightnessUp allow-when-locked=true { spawn "light" "-A" "5"; }
+  XF86MonBrightnessDown allow-when-locked=true { spawn "light" "-U" "5"; }
 
   Mod+Q { close-window; }
 
