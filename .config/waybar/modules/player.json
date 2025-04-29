@@ -1,9 +1,7 @@
 {
-  "custom/player": {
-    "interval": 1,
+  "mpris": {
     "max-length": 70,
     "on-click": "playerctl play-pause",
-    "return-type": "json",
-    "exec": "playerctl metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"class\": \"{{status}}\"}'"
+    "format": "{artist} - {title}"
  }
 }

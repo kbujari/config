@@ -4,7 +4,8 @@
   "height": 36,
   "spacing": 12,
   "margin": "0 0 0 0",
-  "modules-left": ["mpris", "sway/mode"],
+  "modules-left": ["sway/workspaces", "custom/player", "sway/mode"],
+  "modules-center": ["sway/window"],
   "modules-right": ["network", "pulseaudio", "memory", "tray", "idle_inhibitor", "clock"],
   "include": [
     "~/.config/waybar/modules/clock.json",

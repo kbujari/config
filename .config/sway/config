@@ -10,12 +10,10 @@ exec {
 }
 
 exec_always {
-  pkill -x -SIGUSR2 waybar || waybar
+  pkill -SIGUSR2 waybar || exec waybar
 }
 
-
 output * bg #1f1f28 solid_color
-# output * bg ~/files/pictures/apollo.jpg fill
 
 output DP-1 {
   mode 3840x1600@144Hz
@@ -46,7 +44,7 @@ gaps {
   outer 2
 }
 
-font Terminus 10
+font Iosevka 10
 
 default_border pixel 2
 hide_edge_borders smart
@@ -63,6 +61,8 @@ for_window {
   [title="Friends List"] floating enable, resize set width 10 ppt height 50 ppt
   [title="Steam Settings"] floating enable, resize set width 25 ppt height 50 ppt
   [app_id="firefox"] inhibit_idle focus
+
+  [app_id="firefox" title="Extension:.*Bitwarden Password Manager.*"] floating enable
 }
 
 bindsym --to-code {

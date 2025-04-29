@@ -2,11 +2,12 @@ return {
   "ibhagwan/fzf-lua",
   opts = {},
   keys = {
-    { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Search files" },
-    { "<leader>fg", "<cmd>FzfLua live_grep<cr>", desc = "Live grep" },
-    { "<leader>fc", "<cmd>FzfLua colorschemes<cr>", desc = "Change colorscheme" },
+    { "<leader>f", "<cmd>FzfLua files<cr>", desc = "Search files" },
+    { "<leader>h", "<cmd>FzfLua helptags<cr>", desc = "Search helptags" },
+    { "<leader>/", "<cmd>FzfLua live_grep<cr>", desc = "Live grep" },
+    { "<leader>t", "<cmd>FzfLua colorschemes<cr>", desc = "Change colorscheme" },
     {
-      "<leader>fdc",
+      "<leader>c",
       function(_)
         require("fzf-lua").files({ cwd = os.getenv("HOME") .. "/.config/nvim" })
       end,

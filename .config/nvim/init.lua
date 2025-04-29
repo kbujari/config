@@ -34,8 +34,11 @@ opt.title = true -- add file info to window title
 opt.virtualedit = "block" -- freely move cursor in visual mode
 opt.wrap = false -- disable wrapping by default
 
--- manually set filetypes for special files
+-- manually set filetypes for some files
 vim.filetype.add({
+	extension = {
+		dj = "djot",
+	},
 	pattern = {
 		["${XDG_CONFIG_HOME}/zathura/zathurarc"] = "zathurarc",
 		["${XDG_CONFIG_HOME}/waybar/config"] = "json",
@@ -125,6 +128,13 @@ if not vim.uv.fs_stat(lazypath) then
 end
 
 opt.rtp:prepend(lazypath)
+
+vim.diagnostic.config({
+	virtual_text = { current_line = true, severity = { min = "HINT", max = "WARN" } },
+	virtual_lines = { current_line = true, severity = { min = "ERROR" } },
+	severity_sort = true,
+	underline = true,
+})
 
 require("lazy").setup("plugins", {
 	change_detection = { notify = false },

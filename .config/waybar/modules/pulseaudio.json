@@ -2,7 +2,7 @@
   "pulseaudio": {
     "format": "{volume}%",
     "scroll-step": 2,
-    "on-click": "pavucontrol",
+    "on-click": "pwvucontrol",
     "tooltip": false
   }
 }

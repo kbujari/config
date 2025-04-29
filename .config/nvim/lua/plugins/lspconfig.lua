@@ -1,6 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
-  enabled = true,
+	enabled = true,
 	event = { "BufReadPost", "BufNewFile" },
 	command = { "LspInfo", "LspInstall", "LspUninstall" },
 	dependencies = { "saghen/blink.cmp" },
@@ -25,6 +25,7 @@ return {
 				},
 			},
 			cssls = {},
+      fennel_ls= {},
 			lua_ls = {
 				settings = {
 					Lua = {
@@ -45,13 +46,13 @@ return {
 					client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
 						runtime = { version = "LuaJIT" },
 						workspace = {
-							checkThirdParty = false,
-							library = { vim.env.VIMRUNTIME },
+							checkThirdParty = true,
+							library = { vim.env.VIMRUNTIME, "${3rd}/luv/library" },
 						},
 					})
 				end,
 			},
-			nixd = {},
+			nil_ls = {},
 			rust_analyzer = {
 				["settings.rust-analyzer"] = {
 					checkOnSave = {

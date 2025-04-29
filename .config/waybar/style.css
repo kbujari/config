@@ -1,5 +1,5 @@
 * {
-  font-family: Terminus;
+  font-family: Iosevka;
   font-size: 0.8rem;
   border-radius: 0;
   transition-duration: 0;
@@ -20,7 +20,7 @@ widget > * { padding: 0 0.5rem; }
 #battery.bat2.charging { color: #76946a; }
 
 #bluetooth      { color: #458588; }
-#custom-player  { color: #dca561; }
+#mpris          { color: #dca561; }
 #memory         { color: #ffa066; }
 #pulseaudio     { color: #d27e99; }
 #backlight      { color: #6a9589; }
