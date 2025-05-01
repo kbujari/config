@@ -7,7 +7,8 @@
 (require 'package)
 (package-initialize)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
 
 (when (< emacs-major-version 29)
   (unless (package-installed-p 'use-package)
@@ -24,8 +25,13 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 
+(global-hl-line-mode +1)
 (global-display-line-numbers-mode +1)
+(global-display-fill-column-indicator-mode 1)
 (set-default-coding-systems 'utf-8)
+
+(show-paren-mode 1)
+(setq show-paren-delay 0)
 
 (when (fboundp 'which-key-mode)
   (which-key-mode 1))
@@ -68,7 +74,6 @@
   (setq tab-always-indent 'complete)
   (setq corfu-preview-current nil)
   (setq corfu-min-width 20)
-
   (setq corfu-popupinfo-delay '(1.25 . 0.5))
   (corfu-popupinfo-mode 1))
 
@@ -88,6 +93,12 @@
   :mode "\\.nix\\'")
 
 (use-package rust-mode :ensure t)
+
+(use-package geiser
+  :ensure t)
+
+(use-package geiser-guile
+  :ensure t)
 
 (use-package magit
   :ensure t)
