@@ -1,14 +1,19 @@
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file :no-error-if-file-is-missing)
+
 (when (< emacs-major-version 27)
   (package-initialize)
   (load (concat user-emacs-directory "early-init.el")))
 
+(load-theme 'modus-vivendi t)
+
 (require 'package)
-(package-initialize)
 
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+             '("MELPA"  . "https://melpa.org/packages/")
+             '("NONGNU" . "https://elpa.nongnu.org/nongnu/"))
+
+(package-initialize)
 
 (when (< emacs-major-version 29)
   (unless (package-installed-p 'use-package)
@@ -25,9 +30,10 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 
-(global-hl-line-mode +1)
+;; (global-hl-line-mode +1)
 (global-display-line-numbers-mode +1)
 (global-display-fill-column-indicator-mode 1)
+;; (global-font-lock-mode 0) ; Disable syntax highlighting
 (set-default-coding-systems 'utf-8)
 
 (show-paren-mode 1)
@@ -40,9 +46,11 @@
   (set-face-attribute 'default nil :font "Iosevka" :height 124)
   (set-face-attribute 'fixed-pitch nil :family "Iosevka"))
 
-(load-theme 'modus-vivendi t)
-
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
+(add-hook 'prog-mode-hook #'hl-line-mode)
+
+(use-package eat
+  :ensure t)
 
 (use-package evil :ensure t
   :init
@@ -94,6 +102,21 @@
 
 (use-package rust-mode :ensure t)
 
+(use-package tuareg
+  :ensure t)
+
+(use-package dune :ensure t)
+
+(use-package merlin
+  :ensure t
+  :config
+  (add-hook 'tuareg-mode-hook #'merlin-mode))
+
+(use-package utop
+  :ensure t
+  :config
+  (add-hook 'tuareg-mode-hook #'utop-minor-mode))
+
 (use-package geiser
   :ensure t)
 
@@ -106,14 +129,14 @@
 (use-package eglot
   :ensure t
   :bind (("M-TAB" . completion-at-point)
-         :map
-         eglot-mode-map
+         :map eglot-mode-map
          ("C-c c a" . eglot-code-actions)
          ("C-c c r" . eglot-rename)
          ("C-c c f" . eglot-format))
   :hook
   (rust-mode . eglot-ensure)
-  (nix-mode . eglot-ensure))
+  (nix-mode . eglot-ensure)
+  (tuareg-mode . eglot-ensure))
 
 (use-package envrc
   :ensure t
