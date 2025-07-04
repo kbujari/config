@@ -49,6 +49,14 @@
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 (add-hook 'prog-mode-hook #'hl-line-mode)
 
+(use-package mu4e
+  :ensure nil
+  :config
+  (setq mu4e-get-mail-command "mbsync -a"
+        message-kill-buffer-on-exit t ;; don't keep message buffers
+        mu4e-confirm-quit nil ;; don't ask to quit
+        mu4e-change-filenames-when-moving t))
+
 (use-package eat
   :ensure t)
 
