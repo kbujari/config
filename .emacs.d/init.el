@@ -60,6 +60,7 @@
 (use-package eat
   :ensure t)
 
+
 (use-package evil :ensure t
   :init
   (setq evil-want-C-u-scroll t)
@@ -69,14 +70,17 @@
 
 (use-package vertico
   :ensure t
-  :hook (after-init . vertico-mode))
+  :hook after-init
+  :custom
+  (vertico-cycle t))
 
 (use-package marginalia
   :ensure t
-  :hook (after-init . marginalia-mode))
+  :hook after-init)
 
 (use-package orderless
   :ensure t
+  :after vertico
   :config
   (setq completion-styles '(orderless basic))
   (setq completion-category-defaults nil)
@@ -85,13 +89,8 @@
 (use-package corfu
   :ensure t
   :hook (after-init . global-corfu-mode)
-  :bind (:map corfu-map ("<tab>" . corfu-complete))
   :config
-  (setq tab-always-indent 'complete)
-  (setq corfu-preview-current nil)
-  (setq corfu-min-width 20)
-  (setq corfu-popupinfo-delay '(1.25 . 0.5))
-  (corfu-popupinfo-mode 1))
+  (keymap-unset corfu-map "RET"))
 
 (use-package dired
   :ensure nil
@@ -99,31 +98,35 @@
   :hook
   ((dired-mode . dired-hide-details-mode)
    (dired-mode . hl-line-mode))
-  :config
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'always)
-  (setq delete-by-moving-to-trash t)
-  (setq dired-dwim-target t))
+  :custom
+  (dired-recursive-copies 'always)
+  (dired-recursive-deletes 'always)
+  (delete-by-moving-to-trash t)
+  (dired-dwim-target t))
 
-(use-package nix-mode :ensure t
+(use-package nix-mode
+  :ensure t
   :mode "\\.nix\\'")
 
-(use-package rust-mode :ensure t)
+(use-package rust-mode
+  :ensure t
+  :mode "\\.rs\\'")
 
 (use-package tuareg
-  :ensure t)
+  :ensure t
+  :mode ("\\(ml[ipy]?\\)\\'" . tuareg-mode))
 
-(use-package dune :ensure t)
+(use-package dune
+  :ensure t
+  :after tuareg)
 
 (use-package merlin
   :ensure t
-  :config
-  (add-hook 'tuareg-mode-hook #'merlin-mode))
+  :hook tuareg-mode)
 
 (use-package utop
   :ensure t
-  :config
-  (add-hook 'tuareg-mode-hook #'utop-minor-mode))
+  :hook (tuareg-mode . utop-minor-mode))
 
 (use-package geiser
   :ensure t)
@@ -141,10 +144,7 @@
          ("C-c c a" . eglot-code-actions)
          ("C-c c r" . eglot-rename)
          ("C-c c f" . eglot-format))
-  :hook
-  (rust-mode . eglot-ensure)
-  (nix-mode . eglot-ensure)
-  (tuareg-mode . eglot-ensure))
+  :hook ((rust-mode nix-mode tuareg-mode) . eglot-ensure))
 
 (use-package envrc
   :ensure t
