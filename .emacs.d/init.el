@@ -27,6 +27,12 @@
       font-lock-maximum-decoration 0
       scroll-preserve-screen-position t)
 
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 
@@ -50,9 +56,9 @@
           :background-mode 'dark
           :kind 'color-scheme)
 
-(let ((quiet-bg "#000000")
-      (quiet-fg "#dadada")
-      (quiet-fg-dim "#707070")
+(let ((quiet-bg "#282828")
+      (quiet-fg "#ebdbb2")
+      (quiet-fg-dim "#ffaf00")
       (quiet-const "#999999")
       (quiet-error "#ff003f"))
 
@@ -271,6 +277,10 @@
 
 (use-package geiser-guile
   :ensure t)
+
+(use-package kdl-mode
+  :ensure t
+  :mode "\\.kdl\\'")
 
 (use-package magit
   :ensure t)
