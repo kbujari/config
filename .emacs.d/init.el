@@ -56,9 +56,9 @@
           :background-mode 'dark
           :kind 'color-scheme)
 
-(let ((quiet-bg "#282828")
-      (quiet-fg "#ebdbb2")
-      (quiet-fg-dim "#ffaf00")
+(let ((quiet-bg "#181616")
+      (quiet-fg "#c5c9c5")
+      (quiet-fg-dim "#707070")
       (quiet-const "#999999")
       (quiet-error "#ff003f"))
 
