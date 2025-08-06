@@ -23,7 +23,6 @@
     },
     "format": "{:%a %d - %H:%M}",
     "format-alt-click": "click-right",
-    "timezone": "America/Toronto",
     "tooltip": true,
     "tooltip-format": "<tt>{calendar}</tt>"
   }
