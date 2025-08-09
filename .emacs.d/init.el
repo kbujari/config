@@ -261,7 +261,8 @@
   :after tuareg)
 
 (use-package haskell-mode
-  :ensure t)
+  :ensure t
+  :mode "\\.hs\\'")
 
 (use-package geiser
   :ensure t)
