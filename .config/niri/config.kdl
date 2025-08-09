@@ -41,8 +41,8 @@ output "LG Display 0x046D Unknown" {
 binds {
   Mod+Shift+Slash { show-hotkey-overlay; }
 
-  Mod+Return { spawn "foot"; }
-  Mod+Shift+Return { spawn "foot" "-a" "foot dropdown"; }
+  Mod+Shift+Return { spawn "foot"; }
+  Mod+Return { spawn "foot" "-a" "foot dropdown"; }
 
   Mod+D { spawn "fuzzel"; }
   Mod+S { screenshot-window; }
