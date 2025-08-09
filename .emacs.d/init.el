@@ -23,8 +23,7 @@
       inhibit-splash-screen t
       blink-cursor-mode 0
       use-file-dialog nil
-      display-line-numbers-type 'relative
-      font-lock-maximum-decoration 0
+      ;; font-lock-maximum-decoration 0
       scroll-preserve-screen-position t)
 
 (setq backup-directory-alist
@@ -36,10 +35,8 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 
-;; (global-hl-line-mode +1)
 (global-display-line-numbers-mode +1)
 (global-display-fill-column-indicator-mode 1)
-;; (global-font-lock-mode 0) ; Disable syntax highlighting
 (set-default-coding-systems 'utf-8)
 
 (show-paren-mode 1)
@@ -47,6 +44,9 @@
 
 (when (fboundp 'which-key-mode)
   (which-key-mode 1))
+
+(add-hook 'before-save-hook #'diff-delete-trailing-whitespace)
+(add-hook 'prog-mode-hook #'hl-line-mode)
 
 (when (member "Iosevka" (font-family-list))
   (set-face-attribute 'default nil :font "Iosevka" :height 124)
@@ -103,19 +103,24 @@
 
 (enable-theme 'quiet)
 
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
-(add-hook 'prog-mode-hook #'hl-line-mode)
+;;(load-theme 'ef-cherie t)
 
 (use-package mu4e
   :ensure nil
-  :config
+  :custom
   (setq mu4e-get-mail-command "mbsync -a"
         message-kill-buffer-on-exit t ;; don't keep message buffers
-        mu4e-confirm-quit nil ;; don't ask to quit
+        mu4e-confirm-quit nil         ;; don't ask to quit
         mu4e-change-filenames-when-moving t))
 
 (use-package eat
   :ensure t)
+
+(setq org-capture-templates
+      '(("j" "Journal Entry"
+        entry (file+datetree "~/org/journal.org")
+        "* %?"
+        :empty-lines 1)))
 
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
@@ -200,16 +205,10 @@
    '("'" . repeat)
    '("<escape>" . ignore)))
 
-;; (use-package evil :ensure t
-;;   :init
-;;   (setq evil-want-C-u-scroll t)
-;;   :hook
-;;   (prog-mode . turn-on-evil-mode)
-;;   (text-mode . turn-on-evil-mode))
-
 (use-package meow
   :ensure t
   :config
+  (setq meow-use-clipboard t)
   (meow-setup)
   (meow-global-mode 1))
 
@@ -239,9 +238,6 @@
 (use-package dired
   :ensure nil
   :commands (dired)
-  :hook
-  ((dired-mode . dired-hide-details-mode)
-   (dired-mode . hl-line-mode))
   :custom
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'always)
@@ -258,25 +254,30 @@
 
 (use-package tuareg
   :ensure t
-  :mode ("\\(ml[ipy]?\\)\\'" . tuareg-mode))
+  :mode ("\\.\\(ml[dipy]?\\)\\'" . tuareg-mode))
 
 (use-package dune
   :ensure t
   :after tuareg)
 
-(use-package merlin
-  :ensure t
-  :hook tuareg-mode)
-
-(use-package utop
-  :ensure t
-  :hook (tuareg-mode . utop-minor-mode))
+(use-package haskell-mode
+  :ensure t)
 
 (use-package geiser
   :ensure t)
 
 (use-package geiser-guile
   :ensure t)
+
+(use-package paredit
+  :ensure t
+  :hook ((emacs-lisp-mode
+          eval-expression-minibuffer-setup-mode
+          lisp-mode
+          lisp-interaction-mode
+          ielm-mode
+          scheme-mode)
+         . enable-paredit-mode))
 
 (use-package kdl-mode
   :ensure t
@@ -287,7 +288,7 @@
 
 (use-package eglot
   :ensure t
-  :hook ((rust-mode nix-mode tuareg-mode) . eglot-ensure)
+  :hook ((rust-mode nix-mode tuareg-mode haskell-mode) . eglot-ensure)
   :custom
   (eglot-ignored-server-capabilities '(:inlayHintProvider))
   :bind (:map eglot-mode-map
