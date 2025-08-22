@@ -1,9 +1,31 @@
-(setq custom-file (locate-user-emacs-file "custom.el"))
-(load custom-file :no-error-if-file-is-missing)
+;; Always load newest byte code
+(setopt load-prefer-newer t)
 
-(when (< emacs-major-version 27)
-  (package-initialize)
-  (load (concat user-emacs-directory "early-init.el")))
+;; Reduce frequency of garbage collection
+(setopt gc-cons-threshold (* 128 1024 1024))
+
+;; Tune processes for better performance
+(setopt read-process-output-max (* 4 1024 1024)
+        process-adaptive-read-buffering nil)
+
+;; Define file for all custom configuration
+(setopt custom-file (locate-user-emacs-file "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+;; Remove extraneous UI elements
+(setopt inhibit-startup-message t
+        inhibit-splash-screen t
+        use-file-dialog nil)
+
+;; Insert tabs as spaces, render tabs as 2 spaces
+(setopt indent-tabs-mode nil
+        tab-width 2)
+
+;; Disable emacs generated files (.#emacsa8932) (#file#) (file~)
+(setopt create-lockfiles nil
+        auto-save-default nil
+        make-backup-files nil)
 
 (require 'package)
 
@@ -13,40 +35,43 @@
 
 (package-initialize)
 
-(when (< emacs-major-version 29)
-  (unless (package-installed-p 'use-package)
-    (unless package-archive-contents
-      (package-refresh-contents))
-    (package-install 'use-package)))
+(when (fboundp 'display-line-numbers-mode)
+  (setopt display-line-numbers-width 3)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 
-(setq inhibit-startup-message t
-      inhibit-splash-screen t
-      blink-cursor-mode 0
-      use-file-dialog nil
-      ;; font-lock-maximum-decoration 0
-      scroll-preserve-screen-position t)
+(when (boundp 'display-fill-column-indicator)
+  (setopt indicate-buffer-boundaries 'left
+          display-fill-column-indicator-character ?┊)
+  (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode))
 
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
+(when (fboundp 'show-paren-mode)
+  (setopt show-paren-delay 0)
+  (add-hook 'prog-mode-hook 'show-paren-mode))
 
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
+(when (fboundp 'repeat-mode)
+  (add-hook 'after-init-hook 'repeat-mode))
 
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
+;; General editor preferences
+(setopt column-number-mode t
+        case-fold-search t
+        scroll-preserve-screen-position 'always
+        truncate-lines nil
+        truncate-partial-width-windows nil
+        buffers-menu-max-size 30)
 
-(global-display-line-numbers-mode +1)
-(global-display-fill-column-indicator-mode 1)
-(set-default-coding-systems 'utf-8)
+;; Deletes selection when typing
+(add-hook 'after-init-hook 'delete-selection-mode)
 
-(show-paren-mode 1)
-(setq show-paren-delay 0)
+;; Update buffers when they change from outside emacs
+(when (fboundp 'global-auto-revert-mode)
+  (setopt global-auto-revert-non-file-buffers t
+          auto-revert-verbose nil)
+  (add-hook 'after-init-hook 'global-auto-revert-mode))
 
 (when (fboundp 'which-key-mode)
-  (which-key-mode 1))
+  (add-hook 'after-init-hook 'which-key-mode))
 
-(add-hook 'before-save-hook #'diff-delete-trailing-whitespace)
-(add-hook 'prog-mode-hook #'hl-line-mode)
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 (when (member "Iosevka" (font-family-list))
   (set-face-attribute 'default nil :font "Iosevka" :height 124)
@@ -89,7 +114,7 @@
    `(font-lock-property-use-face ((t (:foreground ,quiet-fg))))
    `(font-lock-string-face ((t (:foreground ,quiet-const))))
    `(font-lock-type-face ((t (:foreground ,quiet-fg))))
-   `(font-lock-variable-name-face ((t (:foreground ,quiet-fg))))
+   `(Font-lock-variable-name-face ((t (:foreground ,quiet-fg))))
    `(font-lock-variable-use-face ((t (:foreground ,quiet-fg))))
 
    `(tuareg-font-lock-governing-face ((t (:foreground ,quiet-fg :weight bold))))
@@ -101,9 +126,7 @@
    `(fill-column-indicator ((t (:height 1 :background ,quiet-fg-dim :foreground ,quiet-fg-dim))))
    `(region ((t (:background "#ffaf00" :foreground ,quiet-bg))))))
 
-(enable-theme 'quiet)
-
-;;(load-theme 'ef-cherie t)
+;; (enable-theme 'quiet)
 
 (use-package mu4e
   :ensure nil
@@ -112,15 +135,6 @@
         message-kill-buffer-on-exit t ;; don't keep message buffers
         mu4e-confirm-quit nil         ;; don't ask to quit
         mu4e-change-filenames-when-moving t))
-
-(use-package eat
-  :ensure t)
-
-(setq org-capture-templates
-      '(("j" "Journal Entry"
-        entry (file+datetree "~/org/journal.org")
-        "* %?"
-        :empty-lines 1)))
 
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
@@ -205,6 +219,11 @@
    '("'" . repeat)
    '("<escape>" . ignore)))
 
+(use-package ef-themes
+  :ensure t
+  :config
+  (load-theme 'ef-dream t))
+
 (use-package meow
   :ensure t
   :config
@@ -264,6 +283,14 @@
   :ensure t
   :mode "\\.hs\\'")
 
+(use-package erlang
+  :ensure t
+  :mode "\\.[eh]rl\\'")
+
+(use-package typst-ts-mode
+  :ensure t
+  :mode "\\.typ\\'")
+
 (use-package geiser
   :ensure t)
 
@@ -288,10 +315,18 @@
   :ensure t)
 
 (use-package eglot
-  :ensure t
-  :hook ((rust-mode nix-mode tuareg-mode haskell-mode) . eglot-ensure)
-  :custom
-  (eglot-ignored-server-capabilities '(:inlayHintProvider))
+  :hook ((rust-mode
+          nix-mode
+          tuareg-mode
+          haskell-mode
+          erlang-mode
+          typst-ts-mode)
+         . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs
+               '(erlang-mode . ("elp" "server")))
+
+  (setq eglot-ignored-server-capabilities '(:inlayHintProvider))
   :bind (:map eglot-mode-map
          ("C-c c a" . eglot-code-actions)
          ("C-c c r" . eglot-rename)
