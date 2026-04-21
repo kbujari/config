@@ -19,6 +19,10 @@ input {
     accel-profile "flat"
   }
 
+  tablet {
+    map-to-output "PNP(HAT) Kamvas 13 0x01010101"
+  }
+
   focus-follows-mouse // max-scroll-amount="0%"
 }
 
@@ -26,16 +30,22 @@ environment {
   DISPLAY ":0"
 }
 
+output "LG Electronics LG ULTRAGEAR+ 502NTAB7D392" {
+  scale 1.0
+  variable-refresh-rate on-demand=true
+}
+
 output "LG Electronics LG HDR WQHD+ 112NTHMGH369" {
   mode "3840x1600"
   variable-refresh-rate
-  background-color "#282828"
+}
+
+output "PNP(HAT) Kamvas 13 0x01010101" {
+  scale 1.0
 }
 
 output "LG Display 0x046D Unknown" {
-  mode "1920x1080"
   scale 1.0
-  background-color "#1f1f28"
 }
 
 binds {
@@ -49,8 +59,8 @@ binds {
   Mod+Shift+S { screenshot; }
   Mod+Escape { spawn "swaylock" "-c" "2b3328" "--indicator-caps-lock" "--ignore-empty-password"; }
 
-  XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-  XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+  XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "10%+" "--limit" "1.0"; }
+  XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "10%-" "--limit" "1.0"; }
   XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
   XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
@@ -133,6 +143,7 @@ binds {
   Mod+W { toggle-column-tabbed-display; }
 
   Mod+Shift+E { quit; }
+  Mod+Shift+X { spawn "xeyes"; }
 
   Mod+Shift+P { power-off-monitors; }
 }
@@ -150,10 +161,18 @@ layout {
 
   default-column-width { proportion 0.5; }
 
+  background-color "#19191f"
   focus-ring {
     width 2
-    active-color "#fff"
+    active-color "#f2eddd"
     inactive-color "#505050"
+  }
+}
+
+recent-windows {
+  binds {
+    Mod+Tab { next-window; }
+    Mod+Shift+Tab { previous-window; }
   }
 }
 
@@ -171,6 +190,11 @@ screenshot-path "~/pics/screenshots/%Y-%m-%d_%Hh-%Mm-%Ss.png"
 
 window-rule {
   match app-id="firefox$" title="^Picture-in-Picture$"
+  open-floating true
+}
+
+window-rule {
+  match app-id="com.saivert.pwvucontrol"
   open-floating true
 }
 
