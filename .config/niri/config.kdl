@@ -56,6 +56,7 @@ binds {
 
   Mod+D { spawn "fuzzel"; }
   Mod+S { screenshot-window; }
+  Mod+E { spawn "emacsclient" "--create-frame"; }
   Mod+Shift+S { screenshot; }
   Mod+Escape { spawn "swaylock" "-c" "2b3328" "--indicator-caps-lock" "--ignore-empty-password"; }
 
