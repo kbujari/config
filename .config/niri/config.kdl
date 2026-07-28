@@ -30,6 +30,10 @@ environment {
   DISPLAY ":0"
 }
 
+animations {
+  off
+}
+
 output "LG Electronics LG ULTRAGEAR+ 502NTAB7D392" {
   scale 1.0
   variable-refresh-rate on-demand=true
@@ -65,9 +69,9 @@ binds {
   XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
   XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
-  Mod+X allow-when-locked=true { spawn "playerctl" "play-pause"; }
-  Mod+Z allow-when-locked=true { spawn "playerctl" "previous"; }
-  Mod+C allow-when-locked=true { spawn "playerctl" "next"; }
+  // Mod+X allow-when-locked=true { spawn "playerctl" "play-pause"; }
+  // Mod+Z allow-when-locked=true { spawn "playerctl" "previous"; }
+  // Mod+C allow-when-locked=true { spawn "playerctl" "next"; }
 
   XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
   XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
@@ -150,7 +154,7 @@ binds {
 }
 
 layout {
-  gaps 8
+  gaps 0
 
   center-focused-column "never"
 
@@ -160,7 +164,7 @@ layout {
     proportion 0.66667
   }
 
-  default-column-width { proportion 0.5; }
+  default-column-width { proportion 0.3333; }
 
   background-color "#19191f"
   focus-ring {
