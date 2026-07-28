@@ -3,6 +3,7 @@
   "position": "bottom",
   "height": 36,
   "spacing": 12,
+  "start_hidden": true,
   "margin": "0 0 0 0",
   "modules-left": ["mpris", "sway/mode"],
   "modules-right": ["network", "pulseaudio", "memory", "tray", "idle_inhibitor", "clock"],
