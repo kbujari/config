@@ -1,0 +1,14 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[fsmonitor]
+backend = "watchman"
+
+[fsmonitor.watchman]
+register-trigger = true
+
+[ui]
+default-command = "log"
+
+[user]
+name = "Kleidi Bujari"
+email = "mail@4kb.net"
